@@ -9,6 +9,7 @@
     "ItemSettingsAccessor",
     "ItemStackMixin",
     "entity.LivingEntityMixin",
+    "entity.WolfEntityMixin",
     "entity.player.HungerManagerMixin"
   ],
   "client": [],

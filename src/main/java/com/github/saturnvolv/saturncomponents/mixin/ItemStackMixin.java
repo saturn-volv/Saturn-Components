@@ -4,6 +4,8 @@ import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -16,13 +18,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.xml.crypto.Data;
-
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Shadow public abstract ComponentMap getComponents();
 
     @Shadow public abstract ItemStack copy();
+
+    @Shadow public abstract Item getItem();
 
     @Overwrite
     public boolean isFood() {
@@ -30,7 +32,15 @@ public abstract class ItemStackMixin {
     }
     @Inject(method = "getMaxCount", at = @At("HEAD"), cancellable = true)
     public void maxCount( CallbackInfoReturnable<Integer> cir ) {
-        cir.setReturnValue(this.getComponents().get(DataComponentTypes.MAX_STACK_SIZE_CONTENT));
+        cir.setReturnValue(this.getComponentMaxCount());
+    }
+
+    @Unique
+    public int getComponentMaxCount() {
+        Integer maxCount = this.getComponents().get(DataComponentTypes.MAX_STACK_SIZE_CONTENT);
+        if (maxCount != null)
+            return maxCount;
+        return Item.DEFAULT_MAX_COUNT;
     }
     @Inject(method = "getUseAction", at = @At("TAIL"), cancellable = true)
     public void useAction( CallbackInfoReturnable<UseAction> cir) {
@@ -38,18 +48,6 @@ public abstract class ItemStackMixin {
             cir.setReturnValue(
                     this.getFoodProperties().behaviour().getUseAction()
             );
-    }
-    @Inject(method = "finishUsing", at = @At("HEAD"), cancellable = true)
-    private void finishUsing( World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir ) {
-        ItemStack instance = this.copy();
-        if (!this.hasFoodProperties()) cir.setReturnValue(instance);
-        else {
-            ItemStack outputItem = user.eatFood(world, instance);
-            FoodPropertiesComponent foodComp = this.getFoodProperties();
-            if (foodComp.hasResultItem() && outputItem.isEmpty())
-                outputItem = new ItemStack(foodComp.getResult().getItem(), foodComp.getResult().getCount());
-            cir.setReturnValue(outputItem);
-        }
     }
     @Unique
     @Nullable

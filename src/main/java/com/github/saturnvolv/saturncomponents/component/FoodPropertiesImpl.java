@@ -6,38 +6,39 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodPropertiesImpl {
-    default int saturnComponents$hunger( FoodPropertiesComponent foodProperties) {
+    default int hunger( FoodPropertiesComponent foodProperties) {
         return foodProperties.hunger();
     }
-    default float saturnComponents$saturationModifier( FoodPropertiesComponent foodProperties) {
+    default float saturationModifier( FoodPropertiesComponent foodProperties) {
         return foodProperties.saturationModifier();
     }
-    default int saturnComponents$timeToEat( FoodPropertiesComponent foodProperties) {
+    default int timeToEat( FoodPropertiesComponent foodProperties) {
         return foodProperties.timeToEat();
     }
-    default boolean saturnComponents$isMeat( FoodPropertiesComponent foodProperties) {
+    default boolean isMeat( FoodPropertiesComponent foodProperties) {
         return foodProperties.behaviour().isMeat();
     }
-    default boolean saturnComponents$alwaysEdible( FoodPropertiesComponent foodProperties) {
+    default boolean alwaysEdible( FoodPropertiesComponent foodProperties) {
         return foodProperties.behaviour().alwaysEdible();
     }
-    default boolean saturnComponents$isSnack( FoodPropertiesComponent foodProperties) {
+    default boolean isSnack( FoodPropertiesComponent foodProperties) {
         return foodProperties.behaviour().isSnack();
     }
-    default boolean saturnComponents$isDrink( FoodPropertiesComponent foodProperties) {
+    default boolean isDrink( FoodPropertiesComponent foodProperties) {
         return foodProperties.behaviour().isDrink();
     }
-    default boolean saturnComponents$clearsEffects( FoodPropertiesComponent foodProperties) {
+    default boolean clearsEffects( FoodPropertiesComponent foodProperties) {
         return foodProperties.behaviour().clearsEffects();
     }
-    default ItemStack saturnComponents$resultItem( FoodPropertiesComponent foodProperties) {
+    default Optional<ItemStack> resultItem( FoodPropertiesComponent foodProperties) {
         if (foodProperties.hasResultItem())
-            return foodProperties.getResult();
-        return null;
+            return foodProperties.resultItem();
+        return Optional.empty();
     }
-    default List<FoodPropertiesComponent.FoodEffect> saturnComponents$statusEffects( FoodPropertiesComponent foodProperties) {
+    default List<FoodPropertiesComponent.FoodEffect> statusEffects( FoodPropertiesComponent foodProperties) {
         return foodProperties.statusEffects();
     }
 
