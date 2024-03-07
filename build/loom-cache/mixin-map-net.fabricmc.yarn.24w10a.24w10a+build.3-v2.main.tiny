@@ -1,0 +1,6 @@
+v1	named	intermediary
+METHOD	com/github/saturnvolv/saturncomponents/mixin/entity/LivingEntityMixin	()Z	clearStatusEffects	method_6012
+METHOD	com/github/saturnvolv/saturncomponents/mixin/entity/player/HungerManagerMixin	(IF)V	add	method_7585
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Lnet/minecraft/component/ComponentMap;	getComponents	method_57353
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Lnet/minecraft/item/ItemStack;	copy	method_7972
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Z	isFood	method_19267

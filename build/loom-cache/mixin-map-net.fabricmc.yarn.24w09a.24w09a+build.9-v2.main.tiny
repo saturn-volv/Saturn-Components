@@ -1,0 +1,5 @@
+v1	named	intermediary
+METHOD	com/github/saturnvolv/componentcrafting/mixin/ItemStackMixin	()Lnet/minecraft/item/Item;	getItem	method_7909
+METHOD	com/github/saturnvolv/componentcrafting/mixin/ItemMixin	()Lnet/minecraft/component/ComponentMap;	getComponents	method_57347
+METHOD	com/github/saturnvolv/componentcrafting/mixin/ItemMixin	()Z	isFood	method_19263
+METHOD	com/github/saturnvolv/componentcrafting/mixin/ItemMixin	()Lnet/minecraft/item/Item;	asItem	method_8389
