@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.xml.crypto.Data;
+
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Shadow public abstract ComponentMap getComponents();
@@ -25,6 +27,10 @@ public abstract class ItemStackMixin {
     @Overwrite
     public boolean isFood() {
         return this.hasFoodProperties();
+    }
+    @Inject(method = "getMaxCount", at = @At("HEAD"), cancellable = true)
+    public void maxCount( CallbackInfoReturnable<Integer> cir ) {
+        cir.setReturnValue(this.getComponents().get(DataComponentTypes.MAX_STACK_SIZE_CONTENT));
     }
     @Inject(method = "getUseAction", at = @At("TAIL"), cancellable = true)
     public void useAction( CallbackInfoReturnable<UseAction> cir) {

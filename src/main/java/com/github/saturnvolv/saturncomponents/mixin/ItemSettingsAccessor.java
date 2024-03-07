@@ -11,4 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface ItemSettingsAccessor {
     @Accessor
     FoodComponent getFoodComponent();
+
+    @Accessor
+    int getMaxCount();
 }

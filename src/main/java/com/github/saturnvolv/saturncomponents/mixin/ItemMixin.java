@@ -3,6 +3,7 @@ package com.github.saturnvolv.saturncomponents.mixin;
 import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
 import com.github.saturnvolv.saturncomponents.component.FoodPropertiesImpl;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
@@ -20,12 +21,24 @@ import java.util.Optional;
 
 @Mixin(value = Item.class, priority = 1001)
 abstract class ItemMixin implements FoodPropertiesImpl {
+    @Shadow public abstract ComponentMap getComponents();
+
+    @Shadow public abstract int getMaxCount();
+
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item$Settings;getComponents()Lnet/minecraft/component/ComponentMap;"))
-    protected void applyDefaultFoodProperties( Item.Settings settings, CallbackInfo ci ) {
+    protected void applyDefaultProperties( Item.Settings settings, CallbackInfo ci ) {
         FoodComponent foodComponent = ((ItemSettingsAccessor) settings).getFoodComponent();
         if (foodComponent != null) {
             settings.component(DataComponentTypes.FOOD_PROPERTIES_CONTENT, getDefaultFoodComponent(foodComponent));
         }
+
+        int maxCount = ((ItemSettingsAccessor) settings).getMaxCount();
+        if (maxCount != Item.DEFAULT_MAX_COUNT)
+            settings.component(DataComponentTypes.MAX_STACK_SIZE_CONTENT, maxCount);
+    }
+    @Inject(method = "getMaxCount", at = @At("HEAD"), cancellable = true)
+    protected void getMaxCount( CallbackInfoReturnable<Integer> cir ) {
+        cir.setReturnValue(this.getComponents().get(DataComponentTypes.MAX_STACK_SIZE_CONTENT));
     }
     @Inject( method = "getMaxUseTime(Lnet/minecraft/item/ItemStack;)I", at = @At("HEAD"), cancellable = true)
     protected void getMaxUseTime( ItemStack itemStack, CallbackInfoReturnable<Integer> cir) {

@@ -32,6 +32,7 @@ public record FoodPropertiesComponent(
     public static final FoodPropertiesComponent DEFAULT = new FoodPropertiesComponent(0, 0.0f, 32, FoodBehaviour.DEFAULT, Optional.empty(), List.of());
 
     public static final Codec<FoodPropertiesComponent> CODEC;
+    public static final Codec<Integer> POSITIVE_INTEGER = Codec.intRange(1, Integer.MAX_VALUE);
     public static final PacketCodec<RegistryByteBuf, FoodPropertiesComponent> PACKET_CODEC;
 
     public boolean hasResultItem() {
@@ -75,8 +76,8 @@ public record FoodPropertiesComponent(
         CODEC = RecordCodecBuilder.create((instance) -> {
            return instance.group(
                    Codec.INT.fieldOf("hunger").forGetter(FoodPropertiesComponent::hunger),
-                   Codec.FLOAT.optionalFieldOf("saturation_modifier", 1.0f).forGetter(FoodPropertiesComponent::saturationModifier),
-                   Codec.INT.optionalFieldOf("time_to_eat", 32).forGetter(FoodPropertiesComponent::timeToEat),
+                   Codecs.POSITIVE_FLOAT.optionalFieldOf("saturation_modifier", 1.0f).forGetter(FoodPropertiesComponent::saturationModifier),
+                   POSITIVE_INTEGER.optionalFieldOf("time_to_eat", 32).forGetter(FoodPropertiesComponent::timeToEat),
                    FoodBehaviour.CODEC.optionalFieldOf( "food_behaviour", FoodBehaviour.DEFAULT).forGetter(FoodPropertiesComponent::behaviour),
                    ItemStack.CODEC.optionalFieldOf("result_item").forGetter(FoodPropertiesComponent::resultItem),
                    Codecs.createStrictOptionalFieldCodec(FoodEffect.CODEC.listOf(), "custom_effects", List.of()).forGetter(FoodPropertiesComponent::statusEffects)
