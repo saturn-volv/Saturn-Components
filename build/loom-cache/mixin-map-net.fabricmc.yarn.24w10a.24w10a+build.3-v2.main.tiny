@@ -1,6 +1,12 @@
 v1	named	intermediary
+FIELD	com/github/saturnvolv/saturncomponents/mixin/ItemMixin	Lorg/slf4j/Logger;	LOGGER	field_27017
 METHOD	com/github/saturnvolv/saturncomponents/mixin/entity/LivingEntityMixin	()Z	clearStatusEffects	method_6012
 METHOD	com/github/saturnvolv/saturncomponents/mixin/entity/player/HungerManagerMixin	(IF)V	add	method_7585
 METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Lnet/minecraft/component/ComponentMap;	getComponents	method_57353
 METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Lnet/minecraft/item/ItemStack;	copy	method_7972
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Lnet/minecraft/item/Item;	getItem	method_7909
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Z	isDamageable	method_7963
 METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemStackMixin	()Z	isFood	method_19267
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemMixin	()Lnet/minecraft/component/ComponentMap;	getComponents	method_57347
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemMixin	()Lnet/minecraft/item/Item;	asItem	method_8389
+METHOD	com/github/saturnvolv/saturncomponents/mixin/ItemMixin	(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;)Lnet/minecraft/item/ItemStack;	finishUsing	method_7861
