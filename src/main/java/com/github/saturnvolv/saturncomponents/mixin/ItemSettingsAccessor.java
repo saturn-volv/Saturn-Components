@@ -16,4 +16,7 @@ public interface ItemSettingsAccessor {
 
     @Accessor
     int getMaxCount();
+
+    @Accessor
+    int getMaxDamage();
 }

@@ -4,6 +4,9 @@ A small fabric mod which will be used to generate extra features for Item Compon
 `minecraft:max_count`<br>
 This component sets what the maximum count for an item can be. It accepts a simple non-negative integer value.
 
+## Max Damage Component
+`minecraft:max_damage`<br>
+This component sets the maximum damage an item can be given before it breaks. This also allows for non tool items to hold a durability. It accepts a single non-negative integer value.
 
 ## Food Component
 `minecraft:food_properties`<br>
