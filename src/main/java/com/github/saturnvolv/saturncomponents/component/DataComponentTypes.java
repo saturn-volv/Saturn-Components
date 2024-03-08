@@ -2,6 +2,8 @@ package com.github.saturnvolv.saturncomponents.component;
 
 import com.github.saturnvolv.saturncomponents.SaturnComponents;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
+import com.github.saturnvolv.saturncomponents.util.RarityComponent;
+import com.mojang.serialization.Codec;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
@@ -13,6 +15,8 @@ public class DataComponentTypes {
     public static final DataComponentType<FoodPropertiesComponent> FOOD_PROPERTIES_CONTENT;
     public static final DataComponentType<Integer> MAX_COUNT;
     public static final DataComponentType<Integer> MAX_DAMAGE;
+    public static final DataComponentType<RarityComponent> RARITY;
+    public static final DataComponentType<Boolean> IS_FIREPROOF;
     public static void initialize() {}
     static {
         FOOD_PROPERTIES_CONTENT = Registry.register(Registries.DATA_COMPONENT_TYPE, new Identifier("food_properties"),
@@ -22,6 +26,12 @@ public class DataComponentTypes {
         );
         MAX_DAMAGE = Registry.register(Registries.DATA_COMPONENT_TYPE, new Identifier("max_damage"),
                 DataComponentType.<Integer>builder().codec(Codecs.NONNEGATIVE_INT).packetCodec(PacketCodecs.VAR_INT).build()
+        );
+        RARITY = Registry.register(Registries.DATA_COMPONENT_TYPE, new Identifier("rarity"),
+                DataComponentType.<RarityComponent>builder().codec(RarityComponent.CODEC).packetCodec(RarityComponent.PACKET_CODEC).build()
+        );
+        IS_FIREPROOF = Registry.register(Registries.DATA_COMPONENT_TYPE, new Identifier("fireproof"),
+                DataComponentType.<Boolean>builder().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOL).build()
         );
 
     }

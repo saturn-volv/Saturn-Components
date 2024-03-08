@@ -8,6 +8,7 @@
     "ItemMixin",
     "ItemSettingsAccessor",
     "ItemStackMixin",
+    "entity.ItemEntityMixin",
     "entity.LivingEntityMixin",
     "entity.WolfEntityMixin",
     "entity.player.HungerManagerMixin"

@@ -3,6 +3,7 @@ package com.github.saturnvolv.saturncomponents.mixin;
 import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
 import com.github.saturnvolv.saturncomponents.component.FoodPropertiesImpl;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
+import com.github.saturnvolv.saturncomponents.util.RarityComponent;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.component.ComponentMap;
@@ -10,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -22,14 +24,11 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
+
 @Mixin(value = Item.class, priority = 1001)
 abstract class ItemMixin implements FoodPropertiesImpl {
     @Shadow public abstract ComponentMap getComponents();
-    @Shadow public abstract Item asItem();
-
-    @Shadow @Final private static Logger LOGGER;
-
-    @Shadow public abstract ItemStack finishUsing( ItemStack stack, World world, LivingEntity user );
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item$Settings;getComponents()Lnet/minecraft/component/ComponentMap;"))
     protected void applyDefaultProperties( Item.Settings settings, CallbackInfo ci ) {
@@ -39,6 +38,12 @@ abstract class ItemMixin implements FoodPropertiesImpl {
         int maxDamage = ((ItemSettingsAccessor) settings).getMaxDamage();
         if (maxDamage > 0)
             settings.component(DataComponentTypes.MAX_DAMAGE, maxDamage);
+        Rarity rarity = ((ItemSettingsAccessor) settings).getRarity();
+        if (rarity != Rarity.COMMON)
+            settings.component(DataComponentTypes.RARITY, RarityComponent.fromVanillaRarity(rarity));
+        boolean isFireproof = ((ItemSettingsAccessor) settings).isFireproof();
+        if (isFireproof)
+            settings.component(DataComponentTypes.IS_FIREPROOF, true);
 
         FoodComponent foodComponent = ((ItemSettingsAccessor) settings).getFoodComponent();
         if (foodComponent != null) {
@@ -48,6 +53,10 @@ abstract class ItemMixin implements FoodPropertiesImpl {
     @Inject(method = "getMaxCount", at = @At("HEAD"), cancellable = true)
     protected void getMaxCount( CallbackInfoReturnable<Integer> cir ) {
         cir.setReturnValue(this.getComponentMaxCount());
+    }
+    @Redirect(method = "getRarity", at = @At(value = "FIELD", target = "Lnet/minecraft/item/Item;rarity:Lnet/minecraft/util/Rarity;"))
+    private Rarity getStackAwareRarity( Item instance, ItemStack itemStack ) {
+        return RarityComponent.getRarityComponent(itemStack).rarity;
     }
 
     @Inject(method = "getItemBarStep", at = @At("HEAD"))
@@ -68,14 +77,6 @@ abstract class ItemMixin implements FoodPropertiesImpl {
         if (maxCount != null)
             return maxCount;
         return Item.DEFAULT_MAX_COUNT;
-    }
-
-    @Unique
-    public int getComponentMaxDamage() {
-        Integer maxDamage = this.getComponents().get(DataComponentTypes.MAX_DAMAGE);
-        if (maxDamage != null)
-            return maxDamage;
-        return 0;
     }
 
     @Inject(method = "finishUsing", at = @At("TAIL"), cancellable = true)

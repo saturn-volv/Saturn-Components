@@ -43,7 +43,7 @@ The format can be seen in the following json code block:
     // A list of status effect objects that are applied to the player once they have consumed the item.
     "status_effects": [
       {
-        "id": "minecraft:swiftness",
+        "id": "minecraft:speed",
         "duration": 160,
         "amplifier": 0,
         "ambient": false,

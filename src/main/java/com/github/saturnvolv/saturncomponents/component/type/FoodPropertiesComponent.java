@@ -78,9 +78,9 @@ public record FoodPropertiesComponent(
                    Codec.INT.fieldOf("hunger").forGetter(FoodPropertiesComponent::hunger),
                    Codecs.POSITIVE_FLOAT.optionalFieldOf("saturation_modifier", 1.0f).forGetter(FoodPropertiesComponent::saturationModifier),
                    POSITIVE_INTEGER.optionalFieldOf("time_to_eat", 32).forGetter(FoodPropertiesComponent::timeToEat),
-                   FoodBehaviour.CODEC.optionalFieldOf( "food_behaviour", FoodBehaviour.DEFAULT).forGetter(FoodPropertiesComponent::behaviour),
+                   FoodBehaviour.CODEC.optionalFieldOf( "food_behavior", FoodBehaviour.DEFAULT).forGetter(FoodPropertiesComponent::behaviour),
                    ItemStack.CODEC.optionalFieldOf("result_item").forGetter(FoodPropertiesComponent::resultItem),
-                   Codecs.createStrictOptionalFieldCodec(FoodEffect.CODEC.listOf(), "custom_effects", List.of()).forGetter(FoodPropertiesComponent::statusEffects)
+                   Codecs.createStrictOptionalFieldCodec(FoodEffect.CODEC.listOf(), "status_effects", List.of()).forGetter(FoodPropertiesComponent::statusEffects)
 
            ).apply(instance, FoodPropertiesComponent::new);
         });
