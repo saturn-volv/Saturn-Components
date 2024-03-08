@@ -35,7 +35,7 @@ The format can be seen in the following json code block:
       // Whether the item clears all the player's status effects after being consumed.
       "clear_effects": false
     },
-    // The resulting item a food object should have once it's stack size reaches 0 after being consumed.
+    // The resulting item a food object should give the player after being consumed.
     "result_item": {
       "id": "minecraft:air",
       "count": 1
