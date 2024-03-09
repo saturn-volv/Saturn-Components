@@ -6,6 +6,7 @@ import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesCompo
 import com.github.saturnvolv.saturncomponents.util.RarityComponent;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +17,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,7 +46,9 @@ abstract class ItemMixin implements FoodPropertiesImpl {
         boolean isFireproof = ((ItemSettingsAccessor) settings).isFireproof();
         if (isFireproof)
             settings.component(DataComponentTypes.IS_FIREPROOF, true);
-
+        @Nullable Item recipeRemainder = ((ItemSettingsAccessor) settings).getRecipeRemainder();
+        if (recipeRemainder != null)
+            settings.component(DataComponentTypes.RECIPE_REMAINDER, new ItemStack(recipeRemainder));
         FoodComponent foodComponent = ((ItemSettingsAccessor) settings).getFoodComponent();
         if (foodComponent != null) {
             settings.component(DataComponentTypes.FOOD_PROPERTIES_CONTENT, getDefaultFoodComponent(foodComponent));

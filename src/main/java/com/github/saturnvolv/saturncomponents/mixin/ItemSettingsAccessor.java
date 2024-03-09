@@ -25,4 +25,7 @@ public interface ItemSettingsAccessor {
 
     @Accessor
     boolean isFireproof();
+
+    @Accessor
+    Item getRecipeRemainder();
 }
