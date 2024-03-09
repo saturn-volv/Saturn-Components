@@ -7,12 +7,14 @@
     "HoneyBottleItemMixin",
     "ItemMixin",
     "ItemSettingsAccessor",
+    "ItemStackArgumentAccessor",
     "ItemStackMixin",
     "RecipeMixin",
     "entity.ItemEntityMixin",
     "entity.LivingEntityMixin",
     "entity.WolfEntityMixin",
-    "entity.player.HungerManagerMixin"
+    "entity.player.HungerManagerMixin",
+    "server.command.GiveCommandMixin"
   ],
   "client": [],
   "injectors": {

@@ -3,10 +3,9 @@ package com.github.saturnvolv.saturncomponents.mixin;
 import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
 import com.github.saturnvolv.saturncomponents.component.FoodPropertiesImpl;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
-import com.github.saturnvolv.saturncomponents.util.RarityComponent;
+import com.github.saturnvolv.saturncomponents.component.type.RarityComponent;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,15 +17,12 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Objects;
 
 @Mixin(value = Item.class, priority = 1001)
 abstract class ItemMixin implements FoodPropertiesImpl {

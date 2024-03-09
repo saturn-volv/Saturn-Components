@@ -2,7 +2,7 @@ package com.github.saturnvolv.saturncomponents.component;
 
 import com.github.saturnvolv.saturncomponents.SaturnComponents;
 import com.github.saturnvolv.saturncomponents.component.type.FoodPropertiesComponent;
-import com.github.saturnvolv.saturncomponents.util.RarityComponent;
+import com.github.saturnvolv.saturncomponents.component.type.RarityComponent;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.item.ItemStack;

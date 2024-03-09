@@ -1,4 +1,4 @@
-package com.github.saturnvolv.saturncomponents.util;
+package com.github.saturnvolv.saturncomponents.component.type;
 
 import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
 import io.netty.buffer.ByteBuf;

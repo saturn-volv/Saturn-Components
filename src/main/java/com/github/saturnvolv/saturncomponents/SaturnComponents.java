@@ -1,7 +1,7 @@
 package com.github.saturnvolv.saturncomponents;
 
 import com.github.saturnvolv.saturncomponents.component.DataComponentTypes;
-import com.github.saturnvolv.saturncomponents.util.RarityComponent;
+import com.github.saturnvolv.saturncomponents.component.type.RarityComponent;
 import com.mojang.serialization.Codec;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.Item;
